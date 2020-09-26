@@ -1,21 +1,11 @@
-These instruction are to help you solve a test challenge "Calculate Square". Instruction to this test challenge can be found at https://calculate-square.herokuapp.com/instructions
-
-## Step by step
-- Make sure you have node env setup on your local machine
-- As per the instruction you have to implement a post endpoint `/square`
-- Go to `app.js` in this template and you will find `/square` endpoint refers to implementation in `./routes/square` file
-- Go to `square.js` in routes folder
-- in this file a default post method in implemented (denoted by `/`). 
-- write your implementation in this method. This method will be the entry point when you submit your solution for evaluation
-- You need to follow similar approach for actual challenges. Define the end  point as per instruction for each challenge and then submit your application for evaluation
-
 # nodejs-template
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
 This application supports the [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
 
-A `POST /square` endpoint is implemented here to solve an example challenge [Calculate Square](https://calculate-square.herokuapp.com/instructions). You can use the example as a starting point to implement endpoints for other challenges.
+A `POST /square` endpoint is implemented here to solve an example challenge [Calculate Square](https://calculate-square.herokuapp.com/instructions).
+You can use a similar approach as the example to implement endpoints for other challenges. Note the endpoint name required for each challenge.
 
 ## Running Locally
 
