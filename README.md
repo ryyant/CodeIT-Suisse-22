@@ -23,7 +23,7 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 If you run the following `curl` command to send a request to your app, you should be able to see in your logs something like the example below.
 
 ```sh
-$ curl -d '{ "input": 2 }' -H 'Content-Type: application/json' http://localhost:5000/square
+$ curl -d '{ "input": 2 }' -H 'Content-Type: application/json' http://localhost:3000/square
 ```
 
 ```

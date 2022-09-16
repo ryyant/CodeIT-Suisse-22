@@ -6,10 +6,11 @@
     "node": "12.x"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "morgan-body": "^2.5.1"
+    "morgan-body": "^2.5.1",
+    "nodemon": "^2.0.19"
   }
 }
