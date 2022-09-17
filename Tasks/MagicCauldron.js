@@ -5,9 +5,9 @@ module.exports.magiccauldrons = async function (x) {
     let r = await magic(x[i]);
     let obj = {
       part1: r.soup1.toFixed(2),
-      part2: r.time1,
+      part2: r.time1.toFixed(0),
       part3: r.soup2.toFixed(2),
-      part4: r.time2,
+      part4: r.time2.toFixed(0),
     };
     res.push(obj);
   }
@@ -83,9 +83,11 @@ const handlePart4 = async (part4) => {
 
 // recursion method
 const soupFlow1 = async (totalSoup, row, col, soupMatrix) => {
-  let rowLimit = 100;
+  if (totalSoup == 0) {
+    return;
+  }
 
-  if (row >= rowLimit) {
+  if (row >= 100 || col >= 100) {
     return;
   }
 
@@ -147,9 +149,11 @@ const soupFlow2 = async (currSoup, row, col) => {
 
 // recursion method
 const soupFlow3 = async (totalSoup, row, col, soupMatrix) => {
-  let rowLimit = 100;
+  if (totalSoup == 0) {
+    return;
+  }
 
-  if (row >= rowLimit) {
+  if (row >= 100 || col >= 100) {
     return;
   }
 
