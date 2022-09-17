@@ -5,7 +5,7 @@ const to_cumulative = (ticks) => {
       let ticker = t[1];
       let timestamp = t[0];
       let quantity = parseFloat(t[2]);
-      let notional = t[2] * t[3];
+      let notional = parseFloat(t[2] * t[3]);
       return { ticker, timestamp, quantity, notional };
     })
     .sort((a, b) => {
@@ -40,12 +40,12 @@ const to_cumulative = (ticks) => {
     if (timestamp) {
       result.push(
         timestamp +
-          "," +
-          ticker +
-          "," +
-          tickerQty.get(ticker) +
-          "," +
-          tickerNot.get(ticker)
+        "," +
+        ticker +
+        "," +
+        tickerQty.get(ticker) +
+        "," +
+        tickerNot.get(ticker)
       );
     } else {
       result[timestampTracker] +=
@@ -74,15 +74,18 @@ const to_cumulative = (ticks) => {
         // time same, ticker changed
         updateResult(currTimestamp, currTicker);
         updateMap(tick);
-        updateResult(null, tick.ticker);
         currTicker = tick.ticker;
       }
     } else {
       // time has changed
+      updateResult(currTimestamp, currTicker);
       currTimestamp = tick.timestamp;
       currTicker = tick.ticker;
       timestampTracker++;
       updateMap(tick);
+      if (i == ticksObjs.length - 1) {
+        updateResult(currTimestamp, currTicker);
+      }
     }
   }
 
