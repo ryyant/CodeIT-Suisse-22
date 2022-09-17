@@ -136,7 +136,7 @@ const getSteps = (curr, dest) => {
             newDir = 3;
         } else {
             res += 'P';
-            newDir = 3;
+            newDir = 2;
         }
     }
     return [res, newDir];
