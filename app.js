@@ -10,13 +10,14 @@ const {
 const { CryptoCollapz } = require("./Tasks/CryptoCollapz");
 const { magiccauldrons } = require("./Tasks/MagicCauldron");
 const { get_days, get_new_year } = require("./Tasks/CalendarDays");
+const { get_letters, form_letters } = require("./Tasks/QuordleKeyboard");
 const {
   get_steps
 } = require("./Tasks/TravellingRobot");
 
 const app = express();
 app.use(bodyParser.json({ limit: "200mb" }));
-app.use(bodyParser.urlencoded({ limit: "200mb",  extended: true, parameterLimit: 1000000 }));
+app.use(bodyParser.urlencoded({ limit: "200mb", extended: true, parameterLimit: 1000000 }));
 app.use(express.text({ limit: "200mb" }));
 
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
@@ -62,13 +63,22 @@ app.post("/calendarDays", (req, res) => {
   let numbers = req.body.numbers;
   const output = get_days(numbers);
   const output2 = get_new_year(output);
-  res.json({part1: output, part2: output2});
+  res.json({ part1: output, part2: output2 });
 });
 
 app.post("/reversle", (req, res) => {
   let length = req.body.equationLength;
   const output = get_eqn(length);
-  res.json({equation: output});
+  res.json({ equation: output });
+});
+
+app.post("/quordleKeyboard", (req, res) => {
+  let answers = req.body.answers;
+  let attempts = req.body.attempts;
+  let numbers = req.body.numbers;
+  const output = get_letters(answers, attempts)[0];
+  const output2 = form_letters(answers, attempts, numbers);
+  res.json({ part1: output, part2: output2 });
 });
 
 app.post("/travelling-suisse-robot", (req, res) => {
