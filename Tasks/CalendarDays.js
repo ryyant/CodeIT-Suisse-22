@@ -84,45 +84,100 @@ function checkDays(arr) {
 }
 
 const get_new_year = (output) => {
+    let finalRes = [];
     let index = output.indexOf(" ");
-    // console.log(index);
     let newYear = 2001 + index;
-    let firstDay = new Date(Date.UTC(newYear, 0, 1));
+    finalRes.push(newYear);
     let arr = output.split(",");
-    // return the DATE passing in the year and month and day 
-    console.log(arr);
+
+    // arr of months with jan at index 0
     let arrCumDays = [];
     arrCumDays.push(getNumDays(newYear, 0));
 
     for (i=1; i <12; i++) {
-        temp = getNumDays(newYear, i);
+        temp = getNumDays(newYear, i+1);
+        // console.log(temp);
         arrCumDays[i] = arrCumDays[i-1] + temp;
     }
 
     for (i=0; i< 12; i++) {
-        let month = i;
-        let days = arr[i];
+        let month = i; // start from jan
+        let input = arr[i];
+
          // year and month, i have first DAY
         firstDay = new Date(Date.UTC(newYear, i)).getUTCDay();
+
         // if all days, add in first consecutive weekdays of that month
         // if weekend, add in first weekend of that month
         // if weekday, add in first consecutive m-
-        // if (days == 'weekend') {
-        //     console.log(getNumDays(newYear, month + 1));
-            
-        // }
+        if (input == 'weekend') {
+
+            // if first day of month is sat
+            if (firstDay == 6) {
+                finalRes.push(getCumDays(month, arrCumDays) + 1);
+                finalRes.push(getCumDays(month, arrCumDays) + 2);
+            } else if (firstDay == 0) {
+                finalRes.push(getCumDays(month, arrCumDays) + 7);
+                finalRes.push(getCumDays(month, arrCumDays) + 8);
+            } else {
+                let daysToWkend = 6 - firstDay;
+                finalRes.push(getCumDays(month, arrCumDays) + daysToWkend + 1);
+                finalRes.push(getCumDays(month, arrCumDays) + daysToWkend + 2);
+            }
+        }
+        else if (input == 'weekday') {
+            if (firstDay == 6) {
+                for (j = 3; j<8;j++) {
+                    finalRes.push(getCumDays(month, arrCumDays) + j);
+                }
+            } else if (firstDay == 0) {
+                for (j = 2; j<7;j++) {
+                    finalRes.push(getCumDays(month, arrCumDays) + j);
+                }
+            } else {
+                let daysToWkday = 8 - firstDay;
+                for (j = 1; j<6;j++) {
+                    finalRes.push(getCumDays(month, arrCumDays) + daysToWkday + j);
+                }             
+            }
+        }
+        else if (input == 'alldays') {
+            for (j = 0; j<7;j++) {
+                finalRes.push(getCumDays(month, arrCumDays) + j);
+            }
+
+        } else {
+            for (j = 0; j<input.length;j++) {
+                let char = input.charAt(j);
+                if (char == ' ') {
+                    continue;
+                } else {
+                    let daysToDay = 8 - firstDay + j
+                    finalRes.push(getCumDays(month, arrCumDays) + daysToDay);
+                }
+            }
+        }
     }
     // add the cum of months, then add difference between wkend and first day (and next day after)
     // firstWkEnd = firstDay
     // console.log(new Date(Date.UTC(2022, 8)).getUTCDay())
-    console.log(arrCumDays);
+    return(finalRes);
 
 }
 
+// jan is 1 here
 const getNumDays = (year, month) => {
     return new Date(year, month, 0).getDate();
 }
 
+// get no of days til that month from arr 0 to 11 with 11 as 365
+const getCumDays = (month, arr) => {
+    if (month == 0) {
+        return 0;
+    } else {
+        return arr[month-1];
+    }
+}
 
 module.exports = { get_days, get_new_year };
 

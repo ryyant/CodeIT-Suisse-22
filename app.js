@@ -56,5 +56,5 @@ app.post("/calendarDays", (req, res) => {
   let numbers = req.body.numbers;
   const output = get_days(numbers);
   const output2 = get_new_year(output);
-  res.json({part1: output, part2: [2021]});
+  res.json({part1: output, part2: output2});
 });
