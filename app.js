@@ -1,16 +1,18 @@
 const express = require("express");
 const morganBody = require("morgan-body");
 const PORT = process.env.PORT || 3000;
+const bodyParser = require('body-parser');
+
 const {
   to_cumulative_delayed,
   to_cumulative,
 } = require("./Tasks/TickerStream");
 const { CryptoCollapz } = require("./Tasks/CryptoCollapz");
 
-const app = express().use(express.json());
+const app = express();
 
-app.use(express.json({limit: "10mb", extended: true}))
-app.use(express.urlencoded({limit: "10mb", extended: true, parameterLimit: 50000}))
+app.use(bodyParser.json({ limit: "200mb" }));
+app.use(bodyParser.urlencoded({ limit: "200mb",  extended: true, parameterLimit: 1000000 }));
 
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
 
