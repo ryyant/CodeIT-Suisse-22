@@ -13,11 +13,16 @@ const app = express();
 
 app.use(bodyParser.json({ limit: "200mb" }));
 app.use(bodyParser.urlencoded({ limit: "200mb",  extended: true, parameterLimit: 1000000 }));
+app.use(express.text());
 
 const {
   get_days,
   get_new_year
 } = require("./Tasks/CalendarDays");
+
+const {
+  get_steps
+} = require("./Tasks/TravellingRobot");
 
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
 
@@ -57,4 +62,17 @@ app.post("/calendarDays", (req, res) => {
   const output = get_days(numbers);
   const output2 = get_new_year(output);
   res.json({part1: output, part2: output2});
+});
+
+app.post("/reversle", (req, res) => {
+  let length = req.body.equationLength;
+  const output = get_eqn(length);
+  res.json({equation: output});
+});
+
+app.post("/travelling-suisse-robot", (req, res) => {
+  // console.log(req.body);
+  // const output = get_steps(req);
+  const output = get_steps(req.body);
+  res.send(output);
 });
