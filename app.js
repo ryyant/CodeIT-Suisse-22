@@ -1,7 +1,7 @@
 const express = require("express");
 const morganBody = require("morgan-body");
 const PORT = process.env.PORT || 3000;
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 const {
   to_cumulative_delayed,
@@ -9,16 +9,17 @@ const {
 } = require("./Tasks/TickerStream");
 const { CryptoCollapz } = require("./Tasks/CryptoCollapz");
 const { magiccauldrons } = require("./Tasks/MagicCauldron");
+const { get_days, get_new_year } = require("./Tasks/CalendarDays");
 
 const app = express();
-
 app.use(bodyParser.json({ limit: "200mb" }));
-app.use(bodyParser.urlencoded({ limit: "200mb",  extended: true, parameterLimit: 1000000 }));
-
-const {
-  get_days,
-  get_new_year
-} = require("./Tasks/CalendarDays");
+app.use(
+  bodyParser.urlencoded({
+    limit: "200mb",
+    extended: true,
+    parameterLimit: 1000000,
+  })
+);
 
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
 
@@ -63,5 +64,5 @@ app.post("/calendarDays", (req, res) => {
   let numbers = req.body.numbers;
   const output = get_days(numbers);
   const output2 = get_new_year(output);
-  res.json({part1: output, part2: output2});
+  res.json({ part1: output, part2: output2 });
 });
