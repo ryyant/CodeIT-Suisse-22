@@ -54,9 +54,9 @@ app.post("/cryptocollapz", (req, res) => {
   res.json(output);
 });
 
-app.post("/magiccauldrons", (req, res) => {
+app.post("/magiccauldrons", async (req, res) => {
   let arr = req.body;
-  const output = magiccauldrons(arr);
+  const output = await magiccauldrons(arr);
   res.json(output);
 });
 

@@ -1,23 +1,33 @@
-module.exports.magiccauldrons = function (x) {
-  let res = x.map((tc) => {
-    let soup1 = handlePart1(tc.part1);
-    let time1 = handlePart2(tc.part2);
-    let soup2 = handlePart3(tc.part3);
-    let time2 = handlePart4(tc.part4);
-    return {
-      part1: soup1.toFixed(2),
-      part2: time1,
-      part3: soup2.toFixed(2),
-      part4: time2,
+module.exports.magiccauldrons = async function (x) {
+  let res = [];
+
+  for (let i = 0; i < x.length; i++) {
+    let r = await magic(x[i]);
+    let obj = {
+      part1: r.soup1.toFixed(2),
+      part2: r.time1,
+      part3: r.soup2.toFixed(2),
+      part4: r.time2,
     };
-  });
+    res.push(obj);
+  }
+
   return res;
 };
 
-const initMatrix = (part) => {
+const magic = async (tc) => {
+  let soup1 = await handlePart1(tc.part1);
+  let time1 = await handlePart2(tc.part2);
+  let soup2 = await handlePart3(tc.part3);
+  let time2 = await handlePart4(tc.part4);
+
+  return { soup1, time1, soup2, time2 };
+};
+
+const initMatrix = async () => {
   // only need to init these no of rows and cols.
-  let rows = part.row_number + 1;
-  let cols = part.col_number + 1;
+  let rows = 100;
+  let cols = 100;
 
   let soupMatrix = new Array(rows);
   for (var i = 0; i < rows; i++) {
@@ -33,16 +43,16 @@ const initMatrix = (part) => {
   return soupMatrix;
 };
 
-const handlePart1 = (part1) => {
-  let soupMatrix = initMatrix(part1);
+const handlePart1 = async (part1) => {
+  let soupMatrix = await initMatrix();
   let totalSoup = part1.flow_rate * part1.time;
-  soupFlow1(totalSoup, 0, 0, soupMatrix);
+  await soupFlow1(totalSoup, 0, 0, soupMatrix);
 
   return soupMatrix[part1.row_number][part1.col_number] || 0;
 };
 
-const handlePart2 = (part2) => {
-  let totalSoup = soupFlow2(
+const handlePart2 = async (part2) => {
+  let totalSoup = await soupFlow2(
     part2.amount_of_soup,
     part2.row_number,
     part2.col_number
@@ -52,16 +62,16 @@ const handlePart2 = (part2) => {
   return time;
 };
 
-const handlePart3 = (part3) => {
-  let soupMatrix = initMatrix(part3);
+const handlePart3 = async (part3) => {
+  let soupMatrix = await initMatrix();
   let totalSoup = part3.flow_rate * part3.time;
-  soupFlow3(totalSoup, 0, 0, soupMatrix);
+  await soupFlow3(totalSoup, 0, 0, soupMatrix);
 
   return soupMatrix[part3.row_number][part3.col_number] || 0;
 };
 
-const handlePart4 = (part4) => {
-  let totalSoup = soupFlow4(
+const handlePart4 = async (part4) => {
+  let totalSoup = await soupFlow4(
     part4.amount_of_soup,
     part4.row_number,
     part4.col_number
@@ -72,8 +82,8 @@ const handlePart4 = (part4) => {
 };
 
 // recursion method
-const soupFlow1 = (totalSoup, row, col, soupMatrix) => {
-  let rowLimit = soupMatrix.length;
+const soupFlow1 = async (totalSoup, row, col, soupMatrix) => {
+  let rowLimit = 100;
 
   if (row >= rowLimit) {
     return;
@@ -93,7 +103,7 @@ const soupFlow1 = (totalSoup, row, col, soupMatrix) => {
 };
 
 // recursion method
-const soupFlow2 = (currSoup, row, col) => {
+const soupFlow2 = async (currSoup, row, col) => {
   let multiplier = 1;
   let atEdge;
   if (col == row || col == 0) {
@@ -136,8 +146,8 @@ const soupFlow2 = (currSoup, row, col) => {
 };
 
 // recursion method
-const soupFlow3 = (totalSoup, row, col, soupMatrix) => {
-  let rowLimit = soupMatrix.length;
+const soupFlow3 = async (totalSoup, row, col, soupMatrix) => {
+  let rowLimit = 100;
 
   if (row >= rowLimit) {
     return;
@@ -161,7 +171,7 @@ const soupFlow3 = (totalSoup, row, col, soupMatrix) => {
 };
 
 // recursion method
-const soupFlow4 = (currSoup, row, col) => {
+const soupFlow4 = async (currSoup, row, col) => {
   let multiplier = 1;
   let atEdge;
   if (col == row || col == 0) {
