@@ -11,13 +11,18 @@ const { CryptoCollapz } = require("./Tasks/CryptoCollapz");
 const { magiccauldrons } = require("./Tasks/MagicCauldron");
 const { get_days, get_new_year } = require("./Tasks/CalendarDays");
 const { get_letters, form_letters } = require("./Tasks/QuordleKeyboard");
-const {
-  get_steps
-} = require("./Tasks/TravellingRobot");
+const { get_steps } = require("./Tasks/TravellingRobot");
+const { rubix } = require("./Tasks/Rubix");
 
 const app = express();
 app.use(bodyParser.json({ limit: "200mb" }));
-app.use(bodyParser.urlencoded({ limit: "200mb", extended: true, parameterLimit: 1000000 }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "200mb",
+    extended: true,
+    parameterLimit: 1000000,
+  })
+);
 app.use(express.text({ limit: "200mb" }));
 
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
@@ -83,5 +88,10 @@ app.post("/quordleKeyboard", (req, res) => {
 
 app.post("/travelling-suisse-robot", (req, res) => {
   const output = get_steps(req.body);
+  res.send(output);
+});
+
+app.post("/rubix", (req, res) => {
+  const output = rubix(req.body);
   res.send(output);
 });
