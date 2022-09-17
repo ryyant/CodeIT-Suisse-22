@@ -10,20 +10,14 @@ const {
 const { CryptoCollapz } = require("./Tasks/CryptoCollapz");
 const { magiccauldrons } = require("./Tasks/MagicCauldron");
 const { get_days, get_new_year } = require("./Tasks/CalendarDays");
+const {
+  get_steps
+} = require("./Tasks/TravellingRobot");
 
 const app = express();
 app.use(bodyParser.json({ limit: "200mb" }));
 app.use(bodyParser.urlencoded({ limit: "200mb",  extended: true, parameterLimit: 1000000 }));
 app.use(express.text());
-
-const {
-  get_days,
-  get_new_year
-} = require("./Tasks/CalendarDays");
-
-const {
-  get_steps
-} = require("./Tasks/TravellingRobot");
 
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
 
