@@ -8,6 +8,7 @@ const {
   to_cumulative,
 } = require("./Tasks/TickerStream");
 const { CryptoCollapz } = require("./Tasks/CryptoCollapz");
+const { magiccauldrons } = require("./Tasks/MagicCauldron");
 
 const app = express();
 
@@ -49,6 +50,12 @@ app.post("/tickerStreamPart2", (req, res) => {
 app.post("/cryptocollapz", (req, res) => {
   let arr = req.body;
   const output = CryptoCollapz(arr);
+  res.json(output);
+});
+
+app.post("/magiccauldrons", (req, res) => {
+  let arr = req.body;
+  const output = magiccauldrons(arr);
   res.json(output);
 });
 
