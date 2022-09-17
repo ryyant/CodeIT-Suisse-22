@@ -1,3 +1,5 @@
+const e = require("express");
+
 module.exports.magiccauldrons = async function (x) {
   let res = [];
 
@@ -44,11 +46,13 @@ const initMatrix = async () => {
 };
 
 const handlePart1 = async (part1) => {
-  let soupMatrix = await initMatrix();
-  let totalSoup = part1.flow_rate * part1.time;
-  await soupFlow1(totalSoup, 0, 0, soupMatrix);
+  /*   let soupMatrix = await initMatrix();
+   */ let totalSoup = part1.flow_rate * part1.time;
 
-  return soupMatrix[part1.row_number][part1.col_number] || 0;
+  return await soupFlow5(totalSoup, part1.row_number, part1.col_number);
+
+  /*   await soupFlow1(totalSoup, 0, 0, soupMatrix);
+  return soupMatrix[part1.row_number][part1.col_number] || 0; */
 };
 
 const handlePart2 = async (part2) => {
@@ -63,11 +67,14 @@ const handlePart2 = async (part2) => {
 };
 
 const handlePart3 = async (part3) => {
-  let soupMatrix = await initMatrix();
-  let totalSoup = part3.flow_rate * part3.time;
-  await soupFlow3(totalSoup, 0, 0, soupMatrix);
+  /*   let soupMatrix = await initMatrix();
+   */ let totalSoup = part3.flow_rate * part3.time;
 
-  return soupMatrix[part3.row_number][part3.col_number] || 0;
+  return await soupFlow6(totalSoup, part3.row_number, part3.col_number);
+
+  /*   await soupFlow3(totalSoup, 0, 0, soupMatrix);
+
+  return soupMatrix[part3.row_number][part3.col_number] || 0; */
 };
 
 const handlePart4 = async (part4) => {
@@ -104,7 +111,40 @@ const soupFlow1 = async (totalSoup, row, col, soupMatrix) => {
   }
 };
 
-// recursion method
+const soupFlow5 = async (totalSoup, row, col) => {
+  let levelSoup = ((row * (row + 1)) / 2) * 100;
+  let leftOverSoup = totalSoup - levelSoup;
+  let atEdge;
+  if (col == row || col == 0) {
+    atEdge = true;
+  } else {
+    atEdge = false;
+  }
+
+  let totalMultiple = 1;
+
+  if (row == 0) {
+    totalMultiple = 1;
+  } else if (row == 1) {
+    totalMultiple = 2;
+  } else {
+    let noOfColumns = row + 1;
+    totalMultiple = (noOfColumns - 2) * 2 + 2;
+  }
+
+  singleFlow = leftOverSoup / totalMultiple;
+
+  if (!atEdge) {
+    singleFlow *= 2;
+  }
+
+  if (singleFlow > 100) {
+    return 100;
+  } else {
+    return singleFlow;
+  }
+};
+
 const soupFlow2 = async (currSoup, row, col) => {
   let multiplier = 1;
   let atEdge;
@@ -219,4 +259,51 @@ const soupFlow4 = async (currSoup, row, col) => {
 
   let totalSoup = lastRowSoup + levelSoup;
   return totalSoup;
+};
+
+const soupFlow6 = async (totalSoup, row, col) => {
+  let levelSoup = 0;
+  for (let r = 0; r < row; r++) {
+    for (let c = 0; c < row; c++) {
+      if (c % 2 == 0) {
+        levelSoup += 150;
+      } else {
+        levelSoup += 100;
+      }
+    }
+  }
+  let leftOverSoup = totalSoup - levelSoup;
+  let atEdge;
+  if (col == row || col == 0) {
+    atEdge = true;
+  } else {
+    atEdge = false;
+  }
+
+  let totalMultiple = 1;
+
+  if (row == 0) {
+    totalMultiple = 1;
+  } else if (row == 1) {
+    totalMultiple = 2;
+  } else {
+    let noOfColumns = row + 1;
+    totalMultiple = (noOfColumns - 2) * 2 + 2;
+  }
+
+  singleFlow = leftOverSoup / totalMultiple;
+
+  if (!atEdge) {
+    singleFlow *= 2;
+  }
+
+  let limit = 100;
+  if (col % 2 == 0) {
+    limit = 150;
+  }
+  if (singleFlow > limit) {
+    return limit;
+  } else {
+    return singleFlow;
+  }
 };
