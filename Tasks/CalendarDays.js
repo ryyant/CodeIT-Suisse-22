@@ -41,8 +41,8 @@ const get_days = (input) => {
 
         // finalArr[i] = string;
     }
-    // console.log(finalArr.join());
-    return finalArr.join();
+    // console.log(finalArr.join() + ",");
+    return finalArr.join() + ",";
     
     // let result = days.map((day) => console.log(new Date(date.setDate(day))));
     // first check greater than 1 and less than 365
