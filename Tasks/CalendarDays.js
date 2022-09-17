@@ -107,18 +107,10 @@ const get_new_year = (output) => {
          // year and month, i have first DAY
         firstDay = new Date(Date.UTC(newYear, i)).getUTCDay();
 
-        // if all days, add in first consecutive weekdays of that month
-        // if weekend, add in first weekend of that month
-        // if weekday, add in first consecutive m-
         if (input == 'weekend') {
-
-            // if first day of month is sat
-            if (firstDay == 6) {
+            if (firstDay == 0) {
                 finalRes.push(getCumDays(month, arrCumDays) + 1);
-                finalRes.push(getCumDays(month, arrCumDays) + 2);
-            } else if (firstDay == 0) {
                 finalRes.push(getCumDays(month, arrCumDays) + 7);
-                finalRes.push(getCumDays(month, arrCumDays) + 8);
             } else {
                 let daysToWkend = 6 - firstDay;
                 finalRes.push(getCumDays(month, arrCumDays) + daysToWkend + 1);
@@ -142,7 +134,7 @@ const get_new_year = (output) => {
             }
         }
         else if (input == 'alldays') {
-            for (j = 0; j<7;j++) {
+            for (j = 1; j<8;j++) {
                 finalRes.push(getCumDays(month, arrCumDays) + j);
             }
 
@@ -152,15 +144,12 @@ const get_new_year = (output) => {
                 if (char == ' ') {
                     continue;
                 } else {
-                    let daysToDay = 8 - firstDay + j
+                    let daysToDay = 9 - firstDay + j
                     finalRes.push(getCumDays(month, arrCumDays) + daysToDay);
                 }
             }
         }
     }
-    // add the cum of months, then add difference between wkend and first day (and next day after)
-    // firstWkEnd = firstDay
-    // console.log(new Date(Date.UTC(2022, 8)).getUTCDay())
     return(finalRes);
 
 }
