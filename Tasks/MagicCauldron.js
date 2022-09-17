@@ -89,7 +89,7 @@ const handlePart4 = async (part4) => {
 };
 
 // recursion method
-const soupFlow1 = async (totalSoup, row, col, soupMatrix) => {
+/* const soupFlow1 = async (totalSoup, row, col, soupMatrix) => {
   if (totalSoup == 0) {
     return;
   }
@@ -109,7 +109,7 @@ const soupFlow1 = async (totalSoup, row, col, soupMatrix) => {
   } else {
     soupMatrix[row][col] = currSoup + totalSoup;
   }
-};
+}; */
 
 const soupFlow5 = async (totalSoup, row, col) => {
   let levelSoup = ((row * (row + 1)) / 2) * 100;
@@ -138,7 +138,9 @@ const soupFlow5 = async (totalSoup, row, col) => {
     singleFlow *= 2;
   }
 
-  if (singleFlow > 100) {
+  if (singleFlow < 0) {
+    return 0;
+  } else if (singleFlow > 100) {
     return 100;
   } else {
     return singleFlow;
@@ -176,19 +178,14 @@ const soupFlow2 = async (currSoup, row, col) => {
   }
 
   lastRowSoup = singleFlow * totalMultiple;
-  let levelSoup = 0;
-  for (let r = 0; r < row; r++) {
-    for (let c = 0; c < row; c++) {
-      levelSoup += 100;
-    }
-  }
+  let levelSoup = ((row * (row + 1)) / 2) * 100;
 
   let totalSoup = lastRowSoup + levelSoup;
   return totalSoup;
 };
 
 // recursion method
-const soupFlow3 = async (totalSoup, row, col, soupMatrix) => {
+/* const soupFlow3 = async (totalSoup, row, col, soupMatrix) => {
   if (totalSoup == 0) {
     return;
   }
@@ -212,7 +209,7 @@ const soupFlow3 = async (totalSoup, row, col, soupMatrix) => {
   } else {
     soupMatrix[row][col] = currSoup + totalSoup;
   }
-};
+}; */
 
 // recursion method
 const soupFlow4 = async (currSoup, row, col) => {
@@ -248,7 +245,7 @@ const soupFlow4 = async (currSoup, row, col) => {
   lastRowSoup = singleFlow * totalMultiple;
   let levelSoup = 0;
   for (let r = 0; r < row; r++) {
-    for (let c = 0; c < row; c++) {
+    for (let c = 0; c <= r; c++) {
       if (c % 2 == 0) {
         levelSoup += 150;
       } else {
@@ -264,7 +261,7 @@ const soupFlow4 = async (currSoup, row, col) => {
 const soupFlow6 = async (totalSoup, row, col) => {
   let levelSoup = 0;
   for (let r = 0; r < row; r++) {
-    for (let c = 0; c < row; c++) {
+    for (let c = 0; c <= r; c++) {
       if (c % 2 == 0) {
         levelSoup += 150;
       } else {
@@ -301,7 +298,9 @@ const soupFlow6 = async (totalSoup, row, col) => {
   if (col % 2 == 0) {
     limit = 150;
   }
-  if (singleFlow > limit) {
+  if (singleFlow < 0) {
+    return 0;
+  } else if (singleFlow > limit) {
     return limit;
   } else {
     return singleFlow;
