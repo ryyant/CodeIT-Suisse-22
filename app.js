@@ -91,7 +91,7 @@ app.post("/travelling-suisse-robot", (req, res) => {
   res.send(output);
 });
 
-app.post("/rubix", (req, res) => {
+app.post("/rubiks", (req, res) => {
   const output = rubix(req.body);
   res.send(output);
 });
