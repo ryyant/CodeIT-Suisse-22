@@ -72,8 +72,6 @@ app.post("/reversle", (req, res) => {
 });
 
 app.post("/travelling-suisse-robot", (req, res) => {
-  // console.log(req.body);
-  // const output = get_steps(req);
   const output = get_steps(req.body);
-  res.send(output);
+  res.json(output);
 });

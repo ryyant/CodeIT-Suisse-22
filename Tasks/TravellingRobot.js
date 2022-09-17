@@ -40,7 +40,6 @@ const get_steps = (input) => {
             }
         }
     }
-    console.log(charCoord);
     let finalString = '';
     let curr = start;
 
@@ -49,7 +48,6 @@ const get_steps = (input) => {
         let char = word.charAt(n);
         // function returns a coordinate
         let nextCoord = findNearestDist(curr, char, charCoord);
-        // console.log(nextCoord);
 
         // getsteps gets to steps to next coord from curr, return ['LLSSSS', 2]
         let arr = getSteps(curr, nextCoord);
@@ -143,8 +141,6 @@ const getSteps = (curr, dest) => {
         }
     }
     return [res, newDir];
-
-    // console.log(res, newDir);
 }
 
 const updateMap = (char, map) => {
