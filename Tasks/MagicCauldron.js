@@ -6,10 +6,10 @@ module.exports.magiccauldrons = async function (x) {
   for (let i = 0; i < x.length; i++) {
     let r = await magic(x[i]);
     let obj = {
-      part1: r.soup1.toFixed(2),
-      part2: r.time1.toFixed(0),
-      part3: r.soup2.toFixed(2),
-      part4: r.time2.toFixed(0),
+      part1: parseFloat(r.soup1),
+      part2: parseFloat(r.time1.toFixed(0)),
+      part3: parseFloat(r.soup2),
+      part4: parseFloat(r.time2.toFixed(0)),
     };
     res.push(obj);
   }
