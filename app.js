@@ -8,6 +8,10 @@ const {
 const { CryptoCollapz } = require("./Tasks/CryptoCollapz");
 
 const app = express().use(express.json());
+
+app.use(express.json({limit: "10mb", extended: true}))
+app.use(express.urlencoded({limit: "10mb", extended: true, parameterLimit: 50000}))
+
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
@@ -36,7 +40,6 @@ app.post("/tickerStreamPart2", (req, res) => {
 
 app.post("/cryptocollapz", (req, res) => {
   let arr = req.body;
-  console.log(arr);
   const output = CryptoCollapz(arr);
   res.json(output);
 });
