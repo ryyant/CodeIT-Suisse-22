@@ -6,6 +6,11 @@ const {
   to_cumulative,
 } = require("./Tasks/TickerStream");
 
+const {
+  get_days,
+  get_new_year
+} = require("./Tasks/CalendarDays");
+
 const app = express().use(express.json());
 morganBody(app, { noColors: process.env.NODE_ENV === "production" });
 
@@ -29,6 +34,14 @@ app.post("/tickerStreamPart1", (req, res) => {
 app.post("/tickerStreamPart2", (req, res) => {
   let stream = req.body.stream;
   let quantityBlock = req.body.quantityBlock;
+  // console.log(quantityBlock);
   const output = to_cumulative_delayed(stream, quantityBlock);
   res.json({output: output});
+});
+
+app.post("/calendarDays", (req, res) => {
+  let numbers = req.body.numbers;
+  const output = get_days(numbers);
+  const output2 = get_new_year(output);
+  res.json({part1: output, part2: [2021]});
 });
