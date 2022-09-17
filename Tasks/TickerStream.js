@@ -75,6 +75,9 @@ const to_cumulative = (ticks) => {
         updateResult(currTimestamp, currTicker);
         updateMap(tick);
         currTicker = tick.ticker;
+        if (i == ticksObjs.length - 1) {
+          updateResult(currTimestamp, currTicker);
+        }
       }
     } else {
       // time has changed
@@ -138,11 +141,7 @@ const to_cumulative_delayed = (ticks, quantity_block) => {
   let updateResult = (timestamp, ticker) => {
     let qty = tickerQty.get(ticker);
     let price = tickerPrice.get(ticker);
-    console.log("ticker: " + ticker);
-    console.log(qty);
-    console.log(price);
     let notional = tickerNot.get(ticker) - (qty % quantity_block) * price;
-    console.log(notional);
 
     let multiple = tickerMultiple.get(ticker);
 
@@ -202,7 +201,6 @@ const to_cumulative_delayed = (ticks, quantity_block) => {
     }
   }
 
-  console.log(result);
   return result;
 };
 
