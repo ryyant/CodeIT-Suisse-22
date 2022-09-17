@@ -68,20 +68,20 @@ const to_cumulative = (ticks) => {
         // ticker and time same
         updateMap(tick);
         if (i == ticksObjs.length - 1) {
-          updateResult(currTimestamp, currTicker);
+          updateResult(currTimestamp, currTicker); // push last one in 
         }
       } else {
         // time same, ticker changed
-        updateResult(currTimestamp, currTicker);
+        updateResult(currTimestamp, currTicker); // push prev ticker
         updateMap(tick);
         currTicker = tick.ticker;
         if (i == ticksObjs.length - 1) {
-          updateResult(currTimestamp, currTicker);
+          updateResult(null, currTicker); 
         }
       }
     } else {
-      // time has changed
-      updateResult(currTimestamp, currTicker);
+      // time has changed, update prev
+      updateResult(null, currTicker);
       currTimestamp = tick.timestamp;
       currTicker = tick.ticker;
       timestampTracker++;
