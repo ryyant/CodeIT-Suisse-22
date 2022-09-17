@@ -21,8 +21,7 @@ class Coord {
 // direction: 0 up, 1 right, 2 down, 3 left
 
 const get_steps = (input) => {
-    let grid = input.split(/\r?\n/).map((row) => row.substr(0, row.indexOf('\\')));
-    console.log(grid);
+    let grid = input.split(/\r?\n/);
     let word = "CODEITSUISSE";
     let charCoord = new Map();
     let start;
@@ -137,7 +136,7 @@ const getSteps = (curr, dest) => {
             newDir = 3;
         } else {
             res += 'P';
-            newDir = 0;
+            newDir = 3;
         }
     }
     return [res, newDir];

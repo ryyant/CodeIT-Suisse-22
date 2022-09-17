@@ -73,5 +73,5 @@ app.post("/reversle", (req, res) => {
 
 app.post("/travelling-suisse-robot", (req, res) => {
   const output = get_steps(req.body);
-  res.json(output);
+  res.send(output);
 });
