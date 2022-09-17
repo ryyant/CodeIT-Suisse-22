@@ -48,6 +48,9 @@ const to_cumulative = (ticks) => {
         tickerNot.get(ticker)
       );
     } else {
+      if (result[timestampTracker] == undefined) {
+
+      }
       result[timestampTracker] +=
         "," +
         ticker +
@@ -60,6 +63,7 @@ const to_cumulative = (ticks) => {
 
   let result = [];
   let timestampTracker = 0;
+  let firstTicker = ticksObjs[0].ticker;;
 
   for (i = 0; i < ticksObjs.length; i++) {
     let tick = ticksObjs[i];
@@ -80,8 +84,12 @@ const to_cumulative = (ticks) => {
         }
       }
     } else {
-      // time has changed, update prev
-      updateResult(null, currTicker);
+      // time has changed
+      if (timestampTracker == 0 && currTicker.localeCompare(firstTicker) == 0) {
+        updateResult(currTimestamp, currTicker);
+      } else {
+        updateResult(null, currTicker); // add on the prev one to prev string
+      }
       currTimestamp = tick.timestamp;
       currTicker = tick.ticker;
       timestampTracker++;
