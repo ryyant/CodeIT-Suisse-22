@@ -67,22 +67,37 @@ const handlePart2 = async (part2) => {
 };
 
 const handlePart3 = async (part3) => {
-  /*   let soupMatrix = await initMatrix();
-   */ let totalSoup = part3.flow_rate * part3.time;
+  let soupMatrix = await initMatrix();
+  let totalSoup = part3.flow_rate * part3.time;
+  /*   await weirdPots(
+    part3.flow_rate,
+    part3.time,
+    part3.row_number,
+    part3.col_number
+  ); */
+  //return await soupFlow3(totalSoup, part3.row_number, part3.col_number, soupMatrix);
 
-  return await soupFlow6(totalSoup, part3.row_number, part3.col_number);
+  await soupFlow3(totalSoup, 0, 0, soupMatrix);
 
-  /*   await soupFlow3(totalSoup, 0, 0, soupMatrix);
-
-  return soupMatrix[part3.row_number][part3.col_number] || 0; */
+  return soupMatrix[part3.row_number][part3.col_number] || 0;
 };
 
 const handlePart4 = async (part4) => {
-  let totalSoup = await soupFlow4(
+  /*   let soupMatrix = await initMatrix();
+  let time = await weirdPots(
+    part4.flow_rate,
+    part4.amount_of_soup,
+    part4.row_number,
+    part4.col_number,
+    soupMatrix
+  ); */
+
+  let totalSoup = await soupFlow2(
     part4.amount_of_soup,
     part4.row_number,
     part4.col_number
   );
+
   let time = totalSoup / part4.flow_rate;
 
   return time;
@@ -120,7 +135,6 @@ const soupFlow5 = async (totalSoup, row, col) => {
   } else {
     atEdge = false;
   }
-
   let totalMultiple = 1;
 
   if (row == 0) {
@@ -185,7 +199,7 @@ const soupFlow2 = async (currSoup, row, col) => {
 };
 
 // recursion method
-/* const soupFlow3 = async (totalSoup, row, col, soupMatrix) => {
+const soupFlow3 = async (totalSoup, row, col, soupMatrix) => {
   if (totalSoup == 0) {
     return;
   }
@@ -209,7 +223,7 @@ const soupFlow2 = async (currSoup, row, col) => {
   } else {
     soupMatrix[row][col] = currSoup + totalSoup;
   }
-}; */
+};
 
 // recursion method
 const soupFlow4 = async (currSoup, row, col) => {
@@ -305,4 +319,23 @@ const soupFlow6 = async (totalSoup, row, col) => {
   } else {
     return singleFlow;
   }
+};
+
+const weirdPots = async (flowRate, soup, row, col, soupMatrix) => {
+  let totalSoup = soup;
+
+  let spilledSoup = soup;
+
+  if (col == row) {
+    totalSoup += weirdPots(spilledSoup, row - 1, col - 1, soupMatrix);
+  } else if (col == 0) {
+    totalSoup += weirdPots(spilledSoup, row - 1, col, soupMatrix);
+  } else {
+    totalSoup += weirdPots(spilledSoup, row - 1, col, soupMatrix);
+    totalSoup += weirdPots(spilledSoup, row - 1, col - 1, soupMatrix);
+  }
+
+  let currSoup = soupMatrix[row][col];
+
+  return totalSoup;
 };
